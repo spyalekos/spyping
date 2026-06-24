@@ -1,6 +1,6 @@
 [project]
 name = "spyping"
-version = "1.0.5"
+version = "1.0.8"
 description = "A small Android Flet app for configurable periodic ping checks."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -24,8 +24,12 @@ copyright = "Copyright (C) 2026 by Spyalekos"
 [tool.flet.app]
 path = "src"
 
+[tool.flet.icons]
+android = "assets/icon.png"
+
 [tool.flet.android.permission]
 "android.permission.INTERNET" = true
 "android.permission.ACCESS_NETWORK_STATE" = true
 "android.permission.WAKE_LOCK" = true
 "android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" = true
+

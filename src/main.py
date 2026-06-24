@@ -564,6 +564,7 @@ def main(page: ft.Page) -> None:
                     controls=[ft.Text(str(line), selectable=True) for line in lines],
                     spacing=10,
                     tight=True,
+                    scroll=ft.ScrollMode.AUTO,
                 ),
                 actions=[ft.TextButton(content=tr(language, "help_close"))],
                 actions_alignment=ft.MainAxisAlignment.END,
@@ -583,12 +584,14 @@ def main(page: ft.Page) -> None:
                 controls=[
                     ft.Row(
                         controls=[
-                            ft.Text(APP_NAME, size=28, weight=ft.FontWeight.BOLD, expand=True),
-                            ft.Text(APP_VERSION, color=ft.Colors.BLACK54),
+                            ft.Image(src="/icon.png", width=32, height=32, border_radius=8),
+                            ft.Text(APP_NAME, size=24, weight=ft.FontWeight.BOLD),
+                            ft.Text(APP_VERSION, size=12, color=ft.Colors.BLACK54),
+                            ft.Container(expand=True),
                             language_button,
                             help_button,
                         ],
-                        spacing=4,
+                        spacing=8,
                         vertical_alignment=ft.CrossAxisAlignment.CENTER,
                     ),
                     ft.Container(
@@ -640,4 +643,4 @@ def main(page: ft.Page) -> None:
         page.update()
 
 
-ft.app(main)
+ft.app(main, assets_dir="assets")
