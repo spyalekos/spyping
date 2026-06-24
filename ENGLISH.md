@@ -57,43 +57,6 @@ Web/dev run:
 uv run flet run --web
 ```
 
-## Build APK
-
-Build Android only through the project script:
-
-```bash
-./build_apk.sh
-```
-
-The script can take several minutes and produces:
-
-```text
-build/apk/spyping.apk
-```
-
-Install and launch on a connected Android device:
-
-```bash
-adb install -r build/apk/spyping.apk
-adb shell am start -n gr.spyalekos.spyping/.MainActivity
-```
-
-## Validation
-
-Compile check:
-
-```bash
-uv run python -m compileall src
-```
-
-Build script check:
-
-```bash
-bash -n build_apk.sh
-```
-
-After deploying to an Android device, inspect `adb logcat` for Python/Flet/Flutter errors, fatal crashes, ANRs, `Unknown control`, and `RangeError`.
-
 ## Version
 
 Current version: `1.0.4`

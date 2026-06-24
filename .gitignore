@@ -1,8 +1,0 @@
-.venv/
-build/
-dist/
-app_bundle/
-__pycache__/
-*.py[cod]
-.DS_Store
-src/build/
