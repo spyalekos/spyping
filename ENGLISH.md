@@ -1,4 +1,4 @@
-# spyping 1.0.4
+# spyping 1.0.5
 
 `spyping` is a small Android app, written with Python/Flet, that periodically pings an IP address or host configured inside the app.
 
@@ -12,6 +12,7 @@ Greek documentation: [README.md](README.md)
 - Supports manual `Ping now`.
 - Keeps up to the latest `1000` results in history.
 - Keeps an Android wakelock while monitoring is running so the app does not stop because of idle sleep.
+- Detects Android `Operation not permitted` when a locked device blocks ping and shows a clear instruction for Unrestricted battery/device-idle whitelist.
 - Stores target, interval, and language in app storage.
 - Starts in Greek by default and includes a Greek/English language toggle icon.
 - Includes a help icon with short in-app instructions.
@@ -29,6 +30,7 @@ Permissions:
 - `android.permission.INTERNET`
 - `android.permission.ACCESS_NETWORK_STATE`
 - `android.permission.WAKE_LOCK`
+- `android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS`
 
 ## Development
 
@@ -59,7 +61,7 @@ uv run flet run --web
 
 ## Version
 
-Current version: `1.0.4`
+Current version: `1.0.5`
 
 When the version changes, keep these files synchronized:
 

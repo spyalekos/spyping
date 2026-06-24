@@ -17,6 +17,7 @@ DEFAULT_INTERVAL_SECONDS = 300
 DEFAULT_LANGUAGE = "el"
 MIN_INTERVAL_SECONDS = 5
 PING_TIMEOUT_SECONDS = 3
+ANDROID_PERMISSION_DENIED_MARKER = "operation not permitted"
 MAX_HISTORY_ITEMS = 1000
 CONFIG_FILENAME = "settings.json"
 
@@ -35,6 +36,7 @@ TEXT = {
         "no_reply": "Χωρίς απάντηση",
         "checking": "Έλεγχος",
         "config_error": "Λάθος ρύθμισης",
+        "android_restriction": "Περιορισμός Android",
         "next_ping_empty": "Επόμενο ping: -",
         "next_ping_in": "Επόμενο ping σε {duration}",
         "wakelock_on": "Wakelock: ενεργό",
@@ -48,6 +50,7 @@ TEXT = {
         "ping_missing": "Δεν βρέθηκε η εντολή ping στο σύστημα.",
         "ping_timeout": "Το ping έληξε από timeout.",
         "ping_failed": "Το ping απέτυχε: {error}",
+        "background_network_blocked": "Το Android μπλόκαρε το ping όταν η συσκευή ήταν κλειδωμένη. Βάλε την εφαρμογή σε Unrestricted battery ή device-idle whitelist.",
         "reply_received": "λήφθηκε απάντηση",
         "language_tooltip": "Αλλαγή γλώσσας",
         "help_tooltip": "Βοήθεια",
@@ -58,6 +61,7 @@ TEXT = {
             "Στο δεύτερο πεδίο ορίζεις κάθε πόσα δευτερόλεπτα θα γίνεται ping. Η προεπιλογή είναι 300.",
             "Η Έναρξη ξεκινά περιοδικό ping και απενεργοποιεί το χειροκίνητο Ping τώρα μέχρι τη Διακοπή.",
             "Το Wakelock μένει ενεργό όσο τρέχει η παρακολούθηση, ώστε η εφαρμογή να μη σταματά λόγω idle.",
+            "Για αξιόπιστο ping με κλειδωμένη συσκευή, βάλε την εφαρμογή σε Unrestricted battery ή device-idle whitelist.",
             "Το ιστορικό κρατά μέχρι 1000 αποτελέσματα και μετά αφαιρεί τα παλαιότερα.",
         ],
     },
@@ -75,6 +79,7 @@ TEXT = {
         "no_reply": "No reply",
         "checking": "Checking",
         "config_error": "Configuration error",
+        "android_restriction": "Android restriction",
         "next_ping_empty": "Next ping: -",
         "next_ping_in": "Next ping in {duration}",
         "wakelock_on": "Wakelock: on",
@@ -88,6 +93,7 @@ TEXT = {
         "ping_missing": "System ping command not found.",
         "ping_timeout": "Ping timed out.",
         "ping_failed": "Ping failed: {error}",
+        "background_network_blocked": "Android blocked ping while the device was locked. Set the app to Unrestricted battery or add it to the device-idle whitelist.",
         "reply_received": "reply received",
         "language_tooltip": "Change language",
         "help_tooltip": "Help",
@@ -98,6 +104,7 @@ TEXT = {
             "Use the second field to set how often ping runs, in seconds. The default is 300.",
             "Start begins periodic pinging and disables Ping now until Stop.",
             "Wakelock stays enabled while monitoring runs so the app does not stop because of idle sleep.",
+            "For reliable ping while the device is locked, set the app to Unrestricted battery or add it to the device-idle whitelist.",
             "History keeps up to 1000 results and then removes the oldest entries.",
         ],
     },
@@ -241,6 +248,9 @@ def _run_system_ping(target: str) -> PingResult:
         latency_text = f"{latency_ms:.1f} ms" if latency_ms is not None else ""
         return PingResult(True, target, latency_ms, "reply_received" if not latency_text else None, latency_text, checked_at)
 
+    if ANDROID_PERMISSION_DENIED_MARKER in output.lower():
+        return PingResult(False, target, latency_ms, "background_network_blocked", "", checked_at)
+
     summary = output.splitlines()[-1] if output else "No reply."
     return PingResult(False, target, latency_ms, None, summary, checked_at)
 
@@ -260,7 +270,7 @@ def result_message(result: PingResult, language: str) -> str:
 def make_history_row(result: PingResult, language: str) -> ft.Control:
     icon = ft.Icons.CHECK_CIRCLE if result.success else ft.Icons.ERROR
     color = ft.Colors.GREEN_700 if result.success else ft.Colors.RED_700
-    title = tr(language, "online") if result.success else tr(language, "no_reply")
+    title = tr(language, "online") if result.success else tr(language, "android_restriction" if result.message_key == "background_network_blocked" else "no_reply")
     detail = result_message(result, language)
     if len(detail) > 120:
         detail = f"{detail[:117]}..."
@@ -397,7 +407,7 @@ def main(page: ft.Page) -> None:
                 result = status_state["result"]
                 status_icon.name = ft.Icons.CHECK_CIRCLE if result.success else ft.Icons.ERROR
                 status_icon.color = ft.Colors.GREEN_700 if result.success else ft.Colors.RED_700
-                status_title.value = tr(language, "online") if result.success else tr(language, "no_reply")
+                status_title.value = tr(language, "online") if result.success else tr(language, "android_restriction" if result.message_key == "background_network_blocked" else "no_reply")
                 status_detail.value = f"{result.target} - {result_message(result, language)}"
             else:
                 status_icon.name = ft.Icons.RADIO_BUTTON_UNCHECKED

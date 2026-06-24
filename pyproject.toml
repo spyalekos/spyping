@@ -1,6 +1,6 @@
 [project]
 name = "spyping"
-version = "1.0.4"
+version = "1.0.5"
 description = "A small Android Flet app for configurable periodic ping checks."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -28,3 +28,4 @@ path = "src"
 "android.permission.INTERNET" = true
 "android.permission.ACCESS_NETWORK_STATE" = true
 "android.permission.WAKE_LOCK" = true
+"android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" = true
