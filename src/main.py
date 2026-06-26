@@ -276,7 +276,7 @@ def make_history_row(result: PingResult, language: str) -> ft.Control:
         detail = f"{detail[:117]}..."
     return ft.Container(
         padding=ft.Padding(12, 10, 12, 10),
-        border=border_all(1, ft.Colors.BLACK12),
+        border=border_all(1, ft.Colors.BLACK_12),
         border_radius=8,
         content=ft.Row(
             controls=[
@@ -284,7 +284,7 @@ def make_history_row(result: PingResult, language: str) -> ft.Control:
                 ft.Column(
                     controls=[
                         ft.Text(f"{format_checked_at(result.checked_at)}  {title}", weight=ft.FontWeight.W_600),
-                        ft.Text(detail, size=12, color=ft.Colors.BLACK54, selectable=True),
+                        ft.Text(detail, size=12, color=ft.Colors.BLACK_54, selectable=True),
                     ],
                     spacing=2,
                     expand=True,
@@ -303,7 +303,7 @@ def main(page: ft.Page) -> None:
     page.spacing = 0
     page.bgcolor = ft.Colors.WHITE
 
-    startup_status = ft.Text(tr(DEFAULT_LANGUAGE, "starting"), color=ft.Colors.BLACK54)
+    startup_status = ft.Text(tr(DEFAULT_LANGUAGE, "starting"), color=ft.Colors.BLACK_54)
     root = ft.SafeArea(
         ft.Container(
             expand=True,
@@ -356,10 +356,10 @@ def main(page: ft.Page) -> None:
         )
         status_icon = ft.Icon(ft.Icons.RADIO_BUTTON_UNCHECKED, color=ft.Colors.BLUE_GREY_500, size=38)
         status_title = ft.Text(size=20, weight=ft.FontWeight.W_600)
-        status_detail = ft.Text(color=ft.Colors.BLACK54, selectable=True)
-        next_ping_text = ft.Text(color=ft.Colors.BLACK54)
-        wakelock_text = ft.Text(color=ft.Colors.BLACK54)
-        start_button = ft.ElevatedButton(icon=ft.Icons.PLAY_ARROW)
+        status_detail = ft.Text(color=ft.Colors.BLACK_54, selectable=True)
+        next_ping_text = ft.Text(color=ft.Colors.BLACK_54)
+        wakelock_text = ft.Text(color=ft.Colors.BLACK_54)
+        start_button = ft.Button(icon=ft.Icons.PLAY_ARROW)
         ping_now_button = ft.OutlinedButton(icon=ft.Icons.NETWORK_PING)
         language_button = ft.IconButton(icon=ft.Icons.LANGUAGE, icon_size=26)
         help_button = ft.IconButton(icon=ft.Icons.HELP_OUTLINE, icon_size=26)
@@ -586,7 +586,7 @@ def main(page: ft.Page) -> None:
                         controls=[
                             ft.Image(src="/icon.png", width=32, height=32, border_radius=8),
                             ft.Text(APP_NAME, size=24, weight=ft.FontWeight.BOLD),
-                            ft.Text(APP_VERSION, size=12, color=ft.Colors.BLACK54),
+                            ft.Text(APP_VERSION, size=12, color=ft.Colors.BLACK_54),
                             ft.Container(expand=True),
                             language_button,
                             help_button,
@@ -596,7 +596,7 @@ def main(page: ft.Page) -> None:
                     ),
                     ft.Container(
                         padding=12,
-                        border=border_all(1, ft.Colors.BLACK12),
+                        border=border_all(1, ft.Colors.BLACK_12),
                         border_radius=8,
                         content=ft.Column(
                             controls=[
@@ -613,7 +613,7 @@ def main(page: ft.Page) -> None:
                     ),
                     ft.Container(
                         padding=12,
-                        border=border_all(1, ft.Colors.BLACK12),
+                        border=border_all(1, ft.Colors.BLACK_12),
                         border_radius=8,
                         content=ft.Row(
                             controls=[
@@ -643,4 +643,4 @@ def main(page: ft.Page) -> None:
         page.update()
 
 
-ft.app(main, assets_dir="assets")
+ft.run(main, assets_dir="assets")

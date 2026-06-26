@@ -1,4 +1,4 @@
-# spyping 1.0.8
+# spyping 1.0.9
 
 `spyping` is a small Android app, written with Python/Flet, that periodically pings an IP address or host configured inside the app.
 
@@ -61,7 +61,7 @@ uv run flet run --web
 
 ## Version
 
-Current version: `1.0.8`
+Current version: `1.0.9`
 
 When the version changes, keep these files synchronized:
 
